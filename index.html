@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RentEase – Premium Furniture & Appliance Rental</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  AUTH PAGES                                        -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="page-auth" class="page active">
+  <div class="auth-bg">
+    <div class="auth-orb orb1"></div>
+    <div class="auth-orb orb2"></div>
+    <div class="auth-orb orb3"></div>
+  </div>
+  <div class="auth-container">
+    <div class="auth-brand">
+      <div class="logo-mark">RE</div>
+      <span class="brand-name">Rent<em>Ease</em></span>
+    </div>
+    <div class="auth-card glass">
+      <!-- LOGIN -->
+      <div id="form-login" class="auth-form active">
+        <h2>Welcome Back</h2>
+        <p class="auth-sub">Sign in to your account</p>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="login-email" placeholder="you@example.com" class="glass-input"/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" class="glass-input"/>
+        </div>
+        <div class="auth-row">
+          <label class="checkbox-wrap"><input type="checkbox"/> <span>Remember me</span></label>
+          <a href="#" class="link-accent">Forgot password?</a>
+        </div>
+        <button class="btn-grad full" onclick="doLogin()">Sign In →</button>
+        <div class="auth-divider"><span>or</span></div>
+        <button class="btn-ghost full" onclick="loginAsAdmin()">🔐 Login as Admin (Demo)</button>
+        <p class="auth-switch">No account? <a href="#" class="link-accent" onclick="switchAuth('register')">Create one</a></p>
+      </div>
+      <!-- REGISTER -->
+      <div id="form-register" class="auth-form">
+        <h2>Get Started</h2>
+        <p class="auth-sub">Create your RentEase account</p>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="John" class="glass-input"/>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Doe" class="glass-input"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com" class="glass-input"/>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 98765 43210" class="glass-input"/>
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <select class="glass-input">
+            <option>Select your city</option>
+            <option>Mumbai</option><option>Bangalore</option><option>Delhi</option>
+            <option>Hyderabad</option><option>Chennai</option><option>Pune</option>
+            <option>Coimbatore</option><option>Ahmedabad</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Min 8 characters" class="glass-input"/>
+        </div>
+        <button class="btn-grad full" onclick="doRegister()">Create Account →</button>
+        <p class="auth-switch">Already have an account? <a href="#" class="link-accent" onclick="switchAuth('login')">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  USER SHELL                                        -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="page-user" class="page">
+  <!-- SIDEBAR -->
+  <aside class="sidebar glass" id="userSidebar">
+    <div class="sidebar-brand">
+      <div class="logo-mark sm">RE</div>
+      <span class="brand-name">Rent<em>Ease</em></span>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" onclick="showUserPage('home')" data-page="home">
+        <span class="nav-icon">🏠</span><span>Home</span>
+      </a>
+      <a class="nav-item" onclick="showUserPage('browse')" data-page="browse">
+        <span class="nav-icon">🛋️</span><span>Browse</span>
+      </a>
+      <a class="nav-item" onclick="showUserPage('cart')" data-page="cart">
+        <span class="nav-icon">🛒</span><span>Cart</span>
+        <span class="badge" id="cartBadge">0</span>
+      </a>
+      <a class="nav-item" onclick="showUserPage('checkout')" data-page="checkout">
+        <span class="nav-icon">💳</span><span>Checkout</span>
+      </a>
+      <a class="nav-item" onclick="showUserPage('rentals')" data-page="rentals">
+        <span class="nav-icon">📦</span><span>My Rentals</span>
+      </a>
+      <a class="nav-item" onclick="showUserPage('history')" data-page="history">
+        <span class="nav-icon">📋</span><span>History</span>
+      </a>
+      <a class="nav-item" onclick="showUserPage('maintenance')" data-page="maintenance">
+        <span class="nav-icon">🔧</span><span>Maintenance</span>
+      </a>
+      <a class="nav-item" onclick="showUserPage('profile')" data-page="profile">
+        <span class="nav-icon">👤</span><span>Profile</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-ghost small" onclick="logout()">← Logout</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content" id="userMain">
+    <!-- TOP BAR -->
+    <header class="topbar glass">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <div class="topbar-search">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="globalSearch" placeholder="Search products, categories…" oninput="handleSearch(this.value)" class="glass-input search-field"/>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-btn" onclick="showToast('No new notifications','ℹ️')">🔔 <span class="notif-dot"></span></div>
+        <div class="user-chip" onclick="showUserPage('profile')">
+          <div class="avatar-sm">JD</div>
+          <span id="topbarName">Jane Doe</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- HOME PAGE -->
+    <section class="upage active" id="upage-home">
+      <div class="hero-user">
+        <div class="hero-text">
+          <div class="hero-tag">✨ Premium Rentals</div>
+          <h1>Furnish Your Space,<br/><em>Your Way</em></h1>
+          <p>Affordable monthly rentals for furniture & appliances. Delivered in 2–3 days.</p>
+          <div class="hero-btns">
+            <button class="btn-grad" onclick="showUserPage('browse')">Browse Products</button>
+            <button class="btn-ghost" onclick="showUserPage('rentals')">My Rentals</button>
+          </div>
+        </div>
+        <div class="hero-cards-wrap">
+          <div class="hero-mini-card glass">🛏️<br/><strong>Beds</strong><br/><span>from ₹999/mo</span></div>
+          <div class="hero-mini-card glass" style="margin-top:32px">❄️<br/><strong>Fridges</strong><br/><span>from ₹799/mo</span></div>
+          <div class="hero-mini-card glass">📺<br/><strong>TVs</strong><br/><span>from ₹649/mo</span></div>
+          <div class="hero-mini-card glass" style="margin-top:32px">🧺<br/><strong>Washing M.</strong><br/><span>from ₹599/mo</span></div>
+        </div>
+      </div>
+      <!-- Stats -->
+      <div class="stat-row">
+        <div class="stat-card glass"><div class="stat-num">5,200+</div><div class="stat-label">Happy Renters</div></div>
+        <div class="stat-card glass"><div class="stat-num">200+</div><div class="stat-label">Products</div></div>
+        <div class="stat-card glass"><div class="stat-num">12</div><div class="stat-label">Cities</div></div>
+        <div class="stat-card glass"><div class="stat-num">4.9 ★</div><div class="stat-label">Avg Rating</div></div>
+      </div>
+      <!-- Featured -->
+      <div class="section-header"><h2>Featured Products</h2><a class="link-accent" onclick="showUserPage('browse')">View All →</a></div>
+      <div class="product-grid" id="featuredGrid"></div>
+      <!-- How it works -->
+      <div class="section-header" style="margin-top:40px"><h2>How It Works</h2></div>
+      <div class="how-grid">
+        <div class="how-card glass"><div class="how-num">01</div><div class="how-icon">🔍</div><h4>Browse</h4><p>Explore our curated catalog by category or search</p></div>
+        <div class="how-card glass"><div class="how-num">02</div><div class="how-icon">📋</div><h4>Choose Plan</h4><p>Pick tenure from 1–12 months that fits your needs</p></div>
+        <div class="how-card glass"><div class="how-num">03</div><div class="how-icon">📅</div><h4>Schedule</h4><p>Select delivery date and preferred time slot</p></div>
+        <div class="how-card glass"><div class="how-num">04</div><div class="how-icon">🏠</div><h4>Enjoy</h4><p>Use with full maintenance support throughout tenure</p></div>
+      </div>
+    </section>
+
+    <!-- BROWSE PAGE -->
+    <section class="upage" id="upage-browse">
+      <div class="page-header">
+        <h2>Browse Products</h2>
+        <div class="filter-bar">
+          <div class="search-wrap">
+            <span>🔍</span>
+            <input type="text" id="browseSearch" placeholder="Search products…" oninput="filterProducts()" class="glass-input"/>
+          </div>
+          <select id="catFilter" class="glass-input" onchange="filterProducts()">
+            <option value="">All Categories</option>
+            <option>Furniture</option><option>Appliances</option>
+          </select>
+          <select id="sortFilter" class="glass-input" onchange="filterProducts()">
+            <option value="default">Sort By</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+          </select>
+        </div>
+      </div>
+      <div class="cat-chips" id="catChips"></div>
+      <div class="product-grid" id="browseGrid"></div>
+    </section>
+
+    <!-- CART PAGE -->
+    <section class="upage" id="upage-cart">
+      <div class="page-header"><h2>🛒 Shopping Cart</h2></div>
+      <div class="cart-layout">
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-summary glass">
+          <h3>Order Summary</h3>
+          <div class="summary-lines" id="summaryLines"></div>
+          <div class="summary-total">
+            <span>Total Payable</span>
+            <span id="cartTotal" class="grad-text">₹0</span>
+          </div>
+          <button class="btn-grad full" onclick="showUserPage('checkout')">Proceed to Checkout →</button>
+          <button class="btn-ghost full" onclick="showUserPage('browse')">+ Add More Items</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHECKOUT PAGE -->
+    <section class="upage" id="upage-checkout">
+      <div class="page-header"><h2>💳 Checkout</h2></div>
+      <div class="checkout-layout">
+        <div class="checkout-left">
+          <div class="glass-card">
+            <h3>📍 Delivery Address</h3>
+            <div class="form-row-2">
+              <div class="form-group"><label>Full Name</label><input class="glass-input" placeholder="Your name"/></div>
+              <div class="form-group"><label>Phone</label><input class="glass-input" placeholder="+91 XXXXX XXXXX"/></div>
+            </div>
+            <div class="form-group"><label>Address Line 1</label><input class="glass-input" placeholder="House/Flat No., Street"/></div>
+            <div class="form-group"><label>Address Line 2</label><input class="glass-input" placeholder="Landmark (optional)"/></div>
+            <div class="form-row-2">
+              <div class="form-group"><label>City</label>
+                <select class="glass-input">
+                  <option>Mumbai</option><option>Bangalore</option><option>Delhi</option>
+                  <option>Hyderabad</option><option>Chennai</option><option>Coimbatore</option>
+                </select>
+              </div>
+              <div class="form-group"><label>PIN Code</label><input class="glass-input" placeholder="600001"/></div>
+            </div>
+          </div>
+          <div class="glass-card" style="margin-top:20px">
+            <h3>📅 Delivery Schedule</h3>
+            <div class="form-row-2">
+              <div class="form-group"><label>Preferred Date</label><input type="date" class="glass-input" id="deliveryDate"/></div>
+              <div class="form-group"><label>Time Slot</label>
+                <select class="glass-input">
+                  <option>9 AM – 12 PM</option><option>12 PM – 3 PM</option>
+                  <option>3 PM – 6 PM</option><option>6 PM – 9 PM</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group"><label>Special Instructions</label><textarea class="glass-input" rows="2" placeholder="Anything we should know?"></textarea></div>
+          </div>
+          <div class="glass-card" style="margin-top:20px">
+            <h3>💰 Payment Method</h3>
+            <div class="payment-options">
+              <label class="pay-option active"><input type="radio" name="pay" checked/> 💳 Pay on Delivery</label>
+              <label class="pay-option"><input type="radio" name="pay"/> 🏦 Net Banking</label>
+              <label class="pay-option"><input type="radio" name="pay"/> 📱 UPI</label>
+              <label class="pay-option"><input type="radio" name="pay"/> 🔄 EMI</label>
+            </div>
+          </div>
+        </div>
+        <div class="checkout-right">
+          <div class="glass-card">
+            <h3>Order Items</h3>
+            <div id="checkoutItems"></div>
+            <div class="summary-lines" id="checkoutSummary"></div>
+            <div class="summary-total">
+              <span>Total</span><span class="grad-text" id="checkoutTotal">₹0</span>
+            </div>
+            <button class="btn-grad full" onclick="placeOrder()">Place Order 🎉</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACTIVE RENTALS PAGE -->
+    <section class="upage" id="upage-rentals">
+      <div class="page-header">
+        <h2>📦 My Active Rentals</h2>
+        <div class="tab-pills">
+          <button class="pill active" onclick="filterRentals('active',this)">Active</button>
+          <button class="pill" onclick="filterRentals('upcoming',this)">Upcoming</button>
+          <button class="pill" onclick="filterRentals('ending',this)">Ending Soon</button>
+        </div>
+      </div>
+      <div class="rental-grid" id="rentalGrid"></div>
+    </section>
+
+    <!-- HISTORY PAGE -->
+    <section class="upage" id="upage-history">
+      <div class="page-header"><h2>📋 Rental History</h2></div>
+      <div class="history-table-wrap glass">
+        <table class="data-table">
+          <thead><tr>
+            <th>Order ID</th><th>Product</th><th>Tenure</th>
+            <th>Start</th><th>End</th><th>Amount</th><th>Status</th>
+          </tr></thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MAINTENANCE PAGE -->
+    <section class="upage" id="upage-maintenance">
+      <div class="page-header"><h2>🔧 Maintenance Requests</h2></div>
+      <div class="maint-layout">
+        <div class="glass-card">
+          <h3>New Request</h3>
+          <div class="form-group"><label>Select Rented Product</label>
+            <select class="glass-input" id="maintProduct">
+              <option>Nordic King Bed (Active)</option>
+              <option>Samsung Fridge 320L (Active)</option>
+              <option>LG Washing Machine (Active)</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Issue Type</label>
+            <select class="glass-input">
+              <option>Physical Damage</option><option>Not Working</option>
+              <option>Wear & Tear</option><option>Missing Part</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Priority</label>
+            <select class="glass-input">
+              <option>Low</option><option>Medium</option><option>High – Urgent</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Description</label>
+            <textarea class="glass-input" rows="4" placeholder="Describe the issue in detail…"></textarea>
+          </div>
+          <div class="form-group"><label>Preferred Visit Date</label>
+            <input type="date" class="glass-input"/>
+          </div>
+          <button class="btn-grad" onclick="submitMaintenance()">Submit Request</button>
+        </div>
+        <div>
+          <h3 style="margin-bottom:16px">Request History</h3>
+          <div id="maintHistory"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE PAGE -->
+    <section class="upage" id="upage-profile">
+      <div class="page-header"><h2>👤 My Profile</h2></div>
+      <div class="profile-layout">
+        <div class="profile-card glass">
+          <div class="avatar-lg" id="profileAvatar">JD</div>
+          <h3 id="profileName">Jane Doe</h3>
+          <p class="text-muted" id="profileEmail">jane@example.com</p>
+          <div class="profile-stats">
+            <div><strong>3</strong><span>Active</span></div>
+            <div><strong>8</strong><span>Total</span></div>
+            <div><strong>4.9★</strong><span>Rating</span></div>
+          </div>
+          <div class="plan-badge">⭐ Standard Plan</div>
+        </div>
+        <div class="profile-form glass-card">
+          <h3>Edit Profile</h3>
+          <div class="form-row-2">
+            <div class="form-group"><label>First Name</label><input class="glass-input" value="Jane"/></div>
+            <div class="form-group"><label>Last Name</label><input class="glass-input" value="Doe"/></div>
+          </div>
+          <div class="form-group"><label>Email</label><input class="glass-input" value="jane@example.com"/></div>
+          <div class="form-group"><label>Phone</label><input class="glass-input" value="+91 98765 43210"/></div>
+          <div class="form-group"><label>City</label>
+            <select class="glass-input"><option>Bangalore</option><option>Mumbai</option><option>Chennai</option></select>
+          </div>
+          <div class="form-group"><label>Address</label><textarea class="glass-input" rows="2">14B, 2nd Floor, Koramangala, Bangalore 560034</textarea></div>
+          <button class="btn-grad" onclick="showToast('Profile updated successfully!','✅')">Save Changes</button>
+          <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)">
+            <h3>Change Password</h3>
+            <div class="form-group"><label>Current Password</label><input type="password" class="glass-input" placeholder="••••••••"/></div>
+            <div class="form-group"><label>New Password</label><input type="password" class="glass-input" placeholder="Min 8 characters"/></div>
+            <button class="btn-ghost" onclick="showToast('Password updated!','🔐')">Update Password</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div><!-- end page-user -->
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  PRODUCT DETAIL MODAL                              -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal glass">
+    <button class="modal-close" onclick="closeModal('productModal')">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!--  ADMIN SHELL                                       -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div id="page-admin" class="page">
+  <!-- SIDEBAR -->
+  <aside class="sidebar admin-sidebar glass" id="adminSidebar">
+    <div class="sidebar-brand">
+      <div class="logo-mark sm admin-mark">AD</div>
+      <span class="brand-name">Rent<em>Ease</em> <span class="admin-label">Admin</span></span>
+    </div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" onclick="showAdminPage('dashboard')" data-page="dashboard"><span class="nav-icon">📊</span><span>Dashboard</span></a>
+      <a class="nav-item" onclick="showAdminPage('users')" data-page="users"><span class="nav-icon">👥</span><span>Users</span></a>
+      <a class="nav-item" onclick="showAdminPage('inventory')" data-page="inventory"><span class="nav-icon">📦</span><span>Inventory</span></a>
+      <a class="nav-item" onclick="showAdminPage('rentals-admin')" data-page="rentals-admin"><span class="nav-icon">🔄</span><span>Rentals</span></a>
+      <a class="nav-item" onclick="showAdminPage('claims')" data-page="claims"><span class="nav-icon">⚠️</span><span>Damage Claims</span></a>
+      <a class="nav-item" onclick="showAdminPage('analytics')" data-page="analytics"><span class="nav-icon">📈</span><span>Analytics</span></a>
+      <a class="nav-item" onclick="showAdminPage('serviceareas')" data-page="serviceareas"><span class="nav-icon">🗺️</span><span>Service Areas</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="btn-ghost small" onclick="logout()">← Logout</button>
+    </div>
+  </aside>
+
+  <!-- ADMIN MAIN -->
+  <main class="main-content" id="adminMain">
+    <header class="topbar glass">
+      <button class="hamburger" onclick="toggleAdminSidebar()">☰</button>
+      <h3 class="topbar-title" id="adminPageTitle">Dashboard</h3>
+      <div class="topbar-right">
+        <div class="user-chip">
+          <div class="avatar-sm admin-av">A</div>
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section class="apage active" id="apage-dashboard">
+      <div class="kpi-grid" id="kpiGrid"></div>
+      <div class="dash-row">
+        <div class="glass-card flex-1">
+          <h3>Recent Orders</h3>
+          <table class="data-table" id="recentOrders"></table>
+        </div>
+        <div class="glass-card" style="min-width:280px">
+          <h3>Quick Actions</h3>
+          <div class="quick-actions">
+            <button class="btn-grad full" onclick="showAdminPage('inventory')">+ Add Product</button>
+            <button class="btn-ghost full" onclick="showAdminPage('rentals-admin')">View Rentals</button>
+            <button class="btn-ghost full" onclick="showAdminPage('claims')">Handle Claims</button>
+            <button class="btn-ghost full" onclick="showAdminPage('analytics')">View Reports</button>
+          </div>
+          <div style="margin-top:20px">
+            <h4 style="margin-bottom:12px">Inventory Alerts</h4>
+            <div id="inventoryAlerts"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- USERS -->
+    <section class="apage" id="apage-users">
+      <div class="page-header">
+        <h2>👥 User Management</h2>
+        <button class="btn-grad" onclick="showToast('Add User modal would open','👤')">+ Add User</button>
+      </div>
+      <div class="glass-card">
+        <div class="table-toolbar">
+          <input class="glass-input" placeholder="Search users…" oninput="searchUsers(this.value)" style="max-width:280px"/>
+          <select class="glass-input" style="max-width:160px"><option>All Status</option><option>Active</option><option>Inactive</option></select>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>City</th><th>Rentals</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="usersBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- INVENTORY -->
+    <section class="apage" id="apage-inventory">
+      <div class="page-header">
+        <h2>📦 Inventory Management</h2>
+        <button class="btn-grad" onclick="openAddProduct()">+ Add Product</button>
+      </div>
+      <div class="glass-card">
+        <div class="table-toolbar">
+          <input class="glass-input" placeholder="Search inventory…" style="max-width:280px"/>
+          <select class="glass-input" style="max-width:160px"><option>All Categories</option><option>Furniture</option><option>Appliances</option></select>
+          <select class="glass-input" style="max-width:160px"><option>All Status</option><option>Available</option><option>Rented</option><option>Maintenance</option></select>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>ID</th><th>Product</th><th>Category</th><th>Rent/mo</th><th>Deposit</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="inventoryBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RENTALS ADMIN -->
+    <section class="apage" id="apage-rentals-admin">
+      <div class="page-header">
+        <h2>🔄 Rental Monitoring</h2>
+        <div class="tab-pills">
+          <button class="pill active" onclick="filterAdminRentals('all',this)">All</button>
+          <button class="pill" onclick="filterAdminRentals('active',this)">Active</button>
+          <button class="pill" onclick="filterAdminRentals('pending',this)">Pending</button>
+          <button class="pill" onclick="filterAdminRentals('completed',this)">Completed</button>
+        </div>
+      </div>
+      <div class="glass-card">
+        <table class="data-table">
+          <thead><tr><th>Order ID</th><th>Customer</th><th>Product</th><th>Tenure</th><th>Amount</th><th>Delivery</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="adminRentalsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- DAMAGE CLAIMS -->
+    <section class="apage" id="apage-claims">
+      <div class="page-header"><h2>⚠️ Damage Claims</h2></div>
+      <div class="claims-grid" id="claimsGrid"></div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section class="apage" id="apage-analytics">
+      <div class="page-header"><h2>📈 Reports & Analytics</h2></div>
+      <div class="kpi-grid" id="analyticsKpi"></div>
+      <div class="dash-row" style="margin-top:24px">
+        <div class="glass-card flex-1">
+          <h3>Revenue Trend (6 Months)</h3>
+          <div class="chart-wrap" id="revenueChart"></div>
+        </div>
+        <div class="glass-card flex-1">
+          <h3>Category Distribution</h3>
+          <div class="donut-wrap" id="categoryChart"></div>
+        </div>
+      </div>
+      <div class="dash-row" style="margin-top:24px">
+        <div class="glass-card flex-1">
+          <h3>Top Rented Products</h3>
+          <div id="topProducts"></div>
+        </div>
+        <div class="glass-card flex-1">
+          <h3>City-wise Distribution</h3>
+          <div id="cityStats"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICE AREAS -->
+    <section class="apage" id="apage-serviceareas">
+      <div class="page-header">
+        <h2>🗺️ Service Area Management</h2>
+        <button class="btn-grad" onclick="showToast('Add city modal would open','🏙️')">+ Add City</button>
+      </div>
+      <div class="areas-grid" id="areasGrid"></div>
+    </section>
+
+  </main>
+</div><!-- end page-admin -->
+
+<!-- ADD PRODUCT MODAL -->
+<div class="modal-overlay" id="addProductModal">
+  <div class="modal glass" style="max-width:560px">
+    <button class="modal-close" onclick="closeModal('addProductModal')">✕</button>
+    <h3 style="margin-bottom:20px">Add New Product</h3>
+    <div class="form-row-2">
+      <div class="form-group"><label>Product Name</label><input class="glass-input" placeholder="e.g. Nordic King Bed"/></div>
+      <div class="form-group"><label>Category</label>
+        <select class="glass-input"><option>Furniture</option><option>Appliances</option></select>
+      </div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Monthly Rent (₹)</label><input type="number" class="glass-input" placeholder="1299"/></div>
+      <div class="form-group"><label>Security Deposit (₹)</label><input type="number" class="glass-input" placeholder="2500"/></div>
+    </div>
+    <div class="form-row-2">
+      <div class="form-group"><label>Stock Qty</label><input type="number" class="glass-input" placeholder="10"/></div>
+      <div class="form-group"><label>Min Tenure (months)</label>
+        <select class="glass-input"><option>1</option><option>3</option><option>6</option></select>
+      </div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea class="glass-input" rows="3" placeholder="Product details…"></textarea></div>
+    <button class="btn-grad full" onclick="showToast('Product added successfully!','✅');closeModal('addProductModal')">Add Product</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toastIcon">✅</span>
+  <span id="toastMsg">Done!</span>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
